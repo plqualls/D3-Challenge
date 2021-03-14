@@ -130,4 +130,19 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         var xLabel = "Age:";
     }
 
+    //Specifying y labels
+    //Percentage of lacking healthcare
+    if (chosenYAxis === 'healthcare') {
+        var yLabel = "No Healthcare:"
+    }
+    //Percentage of obesity
+    else if (chosenYAxis === 'obesity') {
+        var yLabel = "Obesity:"
+    }
+    //Percentage of smokers
+    else {
+        var yLabel = "Smokers:"
+    }
+
     
+
