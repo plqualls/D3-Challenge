@@ -13,18 +13,18 @@ let margin = {
 };
 
 //Calculating height and width for chart
-let width = svgWidth - margin.right - margin.left;
-let height = svgHeight - margin.top - margin.bottom;
+var width = svgWidth - margin.right - margin.left;
+var height = svgHeight - margin.top - margin.bottom;
 
-//append a div classed chart to the scatter element
+//Append a div classed chart to the scatter element
 let chart = d3.select("#scatter").append("div").classed("chart", true);
 
-//append an svg element to the chart with appropriate height and width
+//Append a svg element to chart with height and width
 let svg = chart.append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
 
-//append an svg group
+//Append a svg group
 let chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -32,14 +32,48 @@ let chartGroup = svg.append("g")
 let chosenXAxis = "poverty";
 let chosenYAxis = "healthcare";
 
-//function used for updating x-scale upon clicking on axis label
+//function for updating x-scale upon clicking axis label
 function xScale(censusData, chosenXAxis) {
     //create scales
-    var xLinearScale = d3.scaleLinear()
+    let xLinearScale = d3.scaleLinear()
         .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.8,
             d3.max(censusData, d => d[chosenXAxis]) * 1.2])
         .range([0, width]);
 
     return xLinearScale;
 }
+
+//function for updating y-scale upon clicking axis label
+function yScale(censusData, chosenYAxis) {
+    //create scales
+    let yLinearScale = d3.scaleLinear()
+        .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.8,
+            d3.max(censusData, d => d[chosenYAxis]) * 1.2])
+        .range([height, 0]);
+
+    return yLinearScale;
+}
+
+//function for updating xAxis upon clicking axis label
+function renderAxesX(newXScale, xAxis) {
+    let bottomAxis = d3.axisBottom(newXScale);
+
+    xAxis.transition()
+        .duration(1000)
+        .call(bottomAxis);
+
+    return xAxis;
+}
+
+//function for updating yAxis upon clicking axis label
+function renderAxesY(newYScale, yAxis) {
+    let leftAxis = d3.axisLeft(newYScale);
+
+    yAxis.transition()
+        .duration(1000)
+        .call(leftAxis);
+
+    return yAxis;
+}
+
 
