@@ -32,7 +32,7 @@ let chartGroup = svg.append("g")
 let chosenXAxis = "poverty";
 let chosenYAxis = "healthcare";
 
-//function for updating x-scale upon clicking axis label
+//Function created for updating x-scale upon clicking axis label
 function xScale(censusData, chosenXAxis) {
     //create scales
     let xLinearScale = d3.scaleLinear()
@@ -43,7 +43,7 @@ function xScale(censusData, chosenXAxis) {
     return xLinearScale;
 }
 
-//function for updating y-scale upon clicking axis label
+//Function created for updating y-scale upon clicking axis label
 function yScale(censusData, chosenYAxis) {
     //create scales
     let yLinearScale = d3.scaleLinear()
@@ -54,7 +54,7 @@ function yScale(censusData, chosenYAxis) {
     return yLinearScale;
 }
 
-//function for updating xAxis upon clicking axis label
+//Function created for updating xAxis upon clicking axis label
 function renderAxesX(newXScale, xAxis) {
     let bottomAxis = d3.axisBottom(newXScale);
 
@@ -65,7 +65,7 @@ function renderAxesX(newXScale, xAxis) {
     return xAxis;
 }
 
-//function for updating yAxis upon clicking axis label
+//Function created for updating yAxis upon clicking axis label
 function renderAxesY(newYScale, yAxis) {
     let leftAxis = d3.axisLeft(newYScale);
 
@@ -76,4 +76,58 @@ function renderAxesY(newYScale, yAxis) {
     return yAxis;
 }
 
+//Function created for updating circles group with a transition to new circles regarding changes in x & y axis
+function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
+    circlesGroup.transition()
+        .duration(1000)
+        .attr("cx", data => newXScale(data[chosenXAxis]))
+        .attr("cy", data => newYScale(data[chosenYAxis]));
+
+    return circlesGroup;
+}
+
+//Function created for updating state labels with a transition 
+function renderText(textGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+
+    textGroup.transition()
+        .duration(1000)
+        .attr("x", d => newXScale(d[chosenXAxis]))
+        .attr("y", d => newYScale(d[chosenYAxis]));
+
+    return textGroup;
+}
+//Function created to stylize x-axis values for tooltips
+function styleX(value, chosenXAxis) {
+
+    if (chosenXAxis === 'poverty') {
+        return `${value}%`;
+    }
+    //household income in dollars
+    else if (chosenXAxis === 'income') {
+        return `$${value}`;
+    }
+    //age (number)
+    else {
+        return `${value}`;
+    }
+}
+
+// Function created for updating circles group with new tooltip
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
+
+    //Specifying X labels
+    //Poverty
+    if (chosenXAxis === 'poverty') {
+        let xLabel = "Poverty:";
+    }
+    //Household Income
+    else if (chosenXAxis === 'income') {
+        let xLabel = "Median Income:";
+    }
+    //Age (number)
+    else {
+        var xLabel = "Age:";
+    }
+
+    
