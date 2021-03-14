@@ -22,7 +22,7 @@
 <li>Place additional labels in the scatter plot and give them click events so that your users can decide which data to display.</li>
 <li>Animate transitions for the circles' locations as well as the range of the axes.</li>
 <li>Repeat steps 1 through 2 for two risk factors for each axis or for an extreme challenge, create three for each axis</p>
-
+<li>Incorporate d3-tip by adding tooltips to the circles and display each tooltip with the data that the user has selected.</li>
 </ol>
 </body>
 </html>
